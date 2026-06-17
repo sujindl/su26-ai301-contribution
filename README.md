@@ -37,7 +37,7 @@ No action is taken
 
 ### Environment Setup
 
-I attempted to set up local development environment on macOS Tahoe 26.2 (beta), but encountered incompatibility — Python 3.13 and 3.11 both fail with ImportError: Symbol not found: _XML_SetAllocTrackerActivationThreshold due to a libexpat version mismatch between Homebrew Python bottles and macOS Tahoe's system libraries. This is a known issue with pre-release macOS. I worked around this by exploring the codebase directly on GitHub.
+I attempted to set up local development environment on macOS Tahoe 26.2 (beta), but encountered incompatibility — Python 3.13 and 3.11 both fail with ImportError: Symbol not found: _XML_SetAllocTrackerActivationThreshold due to a libexpat version mismatch between Homebrew Python bottles and macOS Tahoe's system libraries. This is a known issue with pre-release macOS. I worked around this by using a GitHub Codespace instead, where I installed Python 3.13 via the deadsnakes PPA, resolved a missing python3.13-dev and libpq-dev dependency for psycopg2, and successfully ran tests.
 
 ### Steps to Reproduce
 
@@ -46,7 +46,7 @@ I attempted to set up local development environment on macOS Tahoe 26.2 (beta), 
 3. Confirm that no file detects and address all-caps messages or apply role-based timeouts
 
 ### Reproduction Evidence
-As this issue is a feature request and not a bug, it does not exist anywhere in the codebase. 
+Searched the entire codebase using grep ```-r "caps"```, ```grep -r "upper"```, and ```grep -r "timeout"```. No all-caps detection or role-based timeout mechanism exists anywhere in ```duckbot/cogs/```. Confirmed the feature is completely missing and needs to be built from scratch.
 
 - **Issue branch:** [https://github.com/sujindl/duckbot/tree/issue-78](https://github.com/sujindl/duckbot/tree/issue-78)
 - **My findings:** The closest pattern to our issue is ```typos.py``` which uses on_message to detect message content and reply. The timeout feature would follow this same pattern.
