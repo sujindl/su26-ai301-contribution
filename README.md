@@ -1,4 +1,4 @@
-# Contribution [#78]: [Give people a timeout for yelling too much]
+# Contribution [#1]: [Give people a timeout for yelling too much]
 
 **Contribution Number:** [ **1** / 2 / 3 ]  
 **Student:** Sujin Lee  
