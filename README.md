@@ -1,9 +1,9 @@
-# Contribution [#1]: [Give people a timeout for yelling too much]
+# Contribution #1: [Give people a timeout for yelling too much]
 
-**Contribution Number:** [ **1** / 2 / 3 ]  
+**Contribution Number:** 1  
 **Student:** Sujin Lee  
 **Issue:** [duckbot #78](https://github.com/duck-dynasty/duckbot/issues/78)  
-**Status:** **Phase I Complete** [Phase I / Phase II / Phase III / Phase IV] [In Progress / Complete] 
+**Status:** **Phase I Complete** 
 
 ---
 
@@ -29,7 +29,7 @@ No action is taken
 
 ### Affected Components
 
-[Which parts of the codebase are involved?]
+```duckbot/cogs/corrections/```
 
 ---
 
@@ -37,19 +37,19 @@ No action is taken
 
 ### Environment Setup
 
-[Notes on setting up your local development environment - challenges you faced, how you solved them]
+I attempted to set up local development environment on macOS Tahoe 26.2 (beta), but encountered incompatibility — Python 3.13 and 3.11 both fail with ImportError: Symbol not found: _XML_SetAllocTrackerActivationThreshold due to a libexpat version mismatch between Homebrew Python bottles and macOS Tahoe's system libraries. This is a known issue with pre-release macOS. I worked around this by exploring the codebase directly on GitHub.
 
 ### Steps to Reproduce
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Navigate to ```duckbot/cogs/corrections/``` in the repository
+2. Review all existing files: ```bezos.py```, ```bitcoin.py```, ```kubernetes.py```, ```tarlson.py```, ```typos.py```
+3. Confirm that no file detects and address all-caps messages or apply role-based timeouts
 
 ### Reproduction Evidence
+As this issue is a feature request and not a bug, it does not exist anywhere in the codebase. 
 
-- **Commit showing reproduction:** [Link to commit in your fork]
-- **Screenshots/logs:** [If applicable]
-- **My findings:** [What you discovered during reproduction]
+- **Issue branch:** [https://github.com/sujindl/duckbot/tree/issue-78](https://github.com/sujindl/duckbot/tree/issue-78)
+- **My findings:** The closest pattern to our issue is ```typos.py``` which uses on_message to detect message content and reply. The timeout feature would follow this same pattern.
 
 ---
 
@@ -57,30 +57,33 @@ No action is taken
 
 ### Analysis
 
-[Your analysis of the root cause - what's causing the issue?]
+This is a feature request, not a bug. The root cause of the missing behavior is that no cog exists to monitor message content for excessive capitalization. The corrections cog directory contains similar behavior-correction features but none address all-caps messages.
 
 ### Proposed Solution
 
-[High-level description of your fix approach]
+Create a new cog file ```duckbot/cogs/corrections/timeout.py``` that listens to all incoming messages, detects when a message is predominantly uppercase, temporarily assigns a restricted role to the user for 5 minutes, notifies the channel, and welcomes the user back when the timeout expires.
 
 ### Implementation Plan
 
 Using UMPIRE framework (adapted):
 
-**Understand:** [Restate the problem]
+**Understand:** Duckbot has no mechanism to detect all-caps messages or temporarily restrict users who "yell" repeatedly.
 
-**Match:** [What similar patterns/solutions exist in the codebase?]
+**Match:** Match: ```duckbot/cogs/corrections/typos.py``` uses ```@commands.Cog.listener("on_message")``` to detect message content and respond. This can be adapted to our solution to detect all-caps.
 
-**Plan:** [Step-by-step implementation plan]
-1. [Modify file X to do Y]
-2. [Add function Z]
-3. [Update tests]
+**Plan:** 
+1. Create ```duckbot/cogs/corrections/timeout.py``` following the same structure as ```typos.py```
+2. Add ```on_message``` listener that detects if a message is mostly all-caps
+3. Assign a restricted Discord role to the user for 5 minutes using ```asyncio.sleep(300)```
+4. Send timeout message to the channel
+5. Remove the restricted role after 5 minutes and send welcome-back message
+6. Add tests in ```tests/cogs/corrections/```
 
-**Implement:** [Link to your branch/commits as you work]
+**Implement:** [https://github.com/sujindl/duckbot/tree/issue-78](https://github.com/sujindl/duckbot/tree/issue-78)
 
-**Review:** [Self-review checklist - does it follow the project's contribution guidelines?]
+**Review:** Will follow project's Black formatting style and existing cog structure per CLAUDE.md.
 
-**Evaluate:** [How will you verify it works?]
+**Evaluate:** Write unit tests mocking Discord message objects with all-caps content and verify role assignment and removal logic
 
 ---
 
