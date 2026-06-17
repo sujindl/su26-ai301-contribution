@@ -3,7 +3,7 @@
 **Contribution Number:** [ **1** / 2 / 3 ]  
 **Student:** Sujin Lee  
 **Issue:** [duckbot #78](https://github.com/duck-dynasty/duckbot/issues/78)  
-**Status:** [**Phase I** / Phase II / Phase III / Phase IV] [**In Progress** / Complete]
+**Status:** **Phase I Complete** [Phase I / Phase II / Phase III / Phase IV] [In Progress / Complete] 
 
 ---
 
