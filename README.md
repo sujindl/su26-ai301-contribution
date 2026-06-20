@@ -3,7 +3,7 @@
 **Contribution Number:** 1  
 **Student:** Sujin Lee  
 **Issue:** [duckbot #78](https://github.com/duck-dynasty/duckbot/issues/78)  
-**Status:** **Phase II Complete** 
+**Status:** **Phase III Complete** 
 
 ---
 
@@ -91,36 +91,38 @@ Using UMPIRE framework (adapted):
 
 ### Unit Tests
 
-- [ ] Test case 1: [Description]
-- [ ] Test case 2: [Description]
-- [ ] Test case 3: [Description]
+- [x] Test case 1: Bot messages are ignored and never trigger a timeout
+- [x] Test case 2: Short messages under 5 alphabetic characters are ignored
+- [x] Test case 3: Lowercase messages do not trigger a timeout
+- [x] Test case 4: All-caps messages from a server member trigger a reply and timeout
+- [x] Test case 5: All-caps messages in DMs do not trigger a timeout (discord.User has no timeout method)
+- [x] Test case 6: is_yelling() returns True for all-caps messages
+- [x] Test case 7: is_yelling() returns False for lowercase messages
+- [x] Test case 8: is_yelling() returns False for short messages
 
 ### Integration Tests
 
-- [ ] Integration scenario 1
-- [ ] Integration scenario 2
+Not applicable for this feature — the cog integrates directly with Discord's API which requires a live server to test end-to-end.
 
 ### Manual Testing
 
-[What you tested manually and results]
+Could not manually test in a live Discord server as the project is a private friend group bot without access credentials. Verified behavior through unit tests with mocked Discord objects. All 2971 tests pass with 31 skipped.
 
 ---
 
 ## Implementation Notes
 
-### Week [X] Progress
+### Week 3 Progress
 
-[What you built this week, challenges faced, decisions made]
-
-### Week [Y] Progress
-
-[Continue documenting as you work]
+Created ```duckbot/cogs/corrections/timeout.py``` — a new Discord cog that listens for all-caps messages using on_message, detects yelling via an is_yelling() helper that checks if 80%+ of alphabetic characters are uppercase, applies Discord's native member timeout for 5 minutes, and sends a welcome-back message after the timeout expires. Registered the cog in duckbot/cogs/corrections/__init__.py. Used isinstance(message.author, discord.Member) to skip DMs where timeouts aren't possible.
 
 ### Code Changes
 
-- **Files modified:** [List]
-- **Key commits:** [Links to important commits]
-- **Approach decisions:** [Why you chose certain approaches]
+- **Files modified:** ```duckbot/cogs/corrections/timeout.py```
+- **Key commits:**
+  - https://github.com/sujindl/duckbot/pull/1/changes/601d1b3c1db9d0666fdeb162a855e76cf7a43b0c
+  - https://github.com/sujindl/duckbot/pull/1/changes/16a80e6b075287f5da01942d003aa7fc22e07c07
+- **Approach decisions:** Used Discord's native ```member.timeout()``` method instead of manually assigning a restricted role, since the codebase had no existing role management patterns and the native timeout is simpler and more reliable. Used isinstance(message.author, discord.Member) check to skip DMs where timeouts aren't supported. Set yelling threshold at 80% uppercase letters to avoid false positives from messages with abbreviations or acronyms. Ignored messages with fewer than 5 alphabetic characters to avoid timing out short messages like "OK" or "Hi".
 
 ---
 
