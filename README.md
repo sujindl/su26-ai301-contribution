@@ -3,7 +3,7 @@
 **Contribution Number:** 1  
 **Student:** Sujin Lee  
 **Issue:** [duckbot #78](https://github.com/duck-dynasty/duckbot/issues/78)  
-**Status:** **Phase III Complete** 
+**Status:** **Phase IV Complete** 
 
 ---
 
@@ -128,31 +128,34 @@ Created ```duckbot/cogs/corrections/timeout.py``` — a new Discord cog that lis
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when submitted]
+**PR Link:** https://github.com/duck-dynasty/duckbot/pull/1355
 
-**PR Description:** [Draft or final PR description - much of the content above can be adapted]
+**PR Description:** 
+
+Summary: Adds a timeout feature for users who yell (post in all caps) in the server. When a user sends a message that is 80%+ uppercase letters, DuckBot replies with a timeout warning, applies Discord's native 5-minute member timeout, and sends a welcome-back message when the timeout expires. Fixes #78.
+
+Testing: ran format and pytest (2971 passed, 31 skipped).
 
 **Maintainer Feedback:**
 - [Date]: [Summary of feedback received]
 - [Date]: [How you addressed it]
 
-**Status:** [Awaiting review / Iterating / Approved / Merged]
-
+**Status:** Awaiting review
 ---
 
 ## Learnings & Reflections
 
 ### Technical Skills Gained
 
-[What you learned technically]
+Learned how to build a Discord.py cog from scratch using event listeners, specifically on_message. Gained experience with Discord's native timeout API and how to distinguish between discord.Member (server) and discord.User (DM) objects. Learned how to mock asyncio.sleep in tests to prevent them from hanging, and how to structure unit tests for async Discord bot code using pytest-asyncio.
 
 ### Challenges Overcome
 
-[What was hard and how you solved it]
+The biggest challenge was environment setup — macOS Tahoe 26.2 beta has a libexpat incompatibility that prevented Python 3.13 from installing pip, blocking local development entirely. Solved this by switching to GitHub Codespaces and installing Python 3.13 via the deadsnakes PPA. Also encountered tests hanging for 5 minutes due to the real asyncio.sleep being called — fixed by mocking it at the correct module path duckbot.cogs.corrections.timeout.asyncio.sleep.
 
 ### What I'd Do Differently Next Time
 
-[Reflection on your process]
+I'd commit more incrementally rather than making several changes before committing.
 
 ---
 
