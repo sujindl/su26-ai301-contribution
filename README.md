@@ -130,17 +130,13 @@ Created ```duckbot/cogs/corrections/timeout.py``` — a new Discord cog that lis
 
 **PR Link:** https://github.com/duck-dynasty/duckbot/pull/1355
 
-**PR Description:** 
+**PR Description:** Adds a timeout feature for users who yell (post in all caps) in the server. When a user sends a message that is 80%+ uppercase letters, DuckBot replies with a timeout warning, applies Discord's native 5-minute member timeout, and sends a welcome-back message when the timeout expires. Fixes #78.
 
-Summary: Adds a timeout feature for users who yell (post in all caps) in the server. When a user sends a message that is 80%+ uppercase letters, DuckBot replies with a timeout warning, applies Discord's native 5-minute member timeout, and sends a welcome-back message when the timeout expires. Fixes #78.
+**Testing:** ran format and pytest (2971 passed, 31 skipped).
 
-Testing: ran format and pytest (2971 passed, 31 skipped).
+**Maintainer Feedback:** I was unable to receive any maintainer feedback as the repo is not open for contribution at the moment.
 
-**Maintainer Feedback:**
-- [Date]: [Summary of feedback received]
-- [Date]: [How you addressed it]
-
-**Status:** Awaiting review
+### **Status:** Closed
 ---
 
 ## Learnings & Reflections
@@ -161,6 +157,5 @@ I'd commit more incrementally rather than making several changes before committi
 
 ## Resources Used
 
-- [Link to helpful documentation]
-- [Tutorial or Stack Overflow post that helped]
-- [GitHub issues or discussions that helped]
+- [Duckbot README](https://github.com/duck-dynasty/duckbot?tab=readme-ov-file)
+- [Discord API reference](https://discordpy.readthedocs.io/en/stable/api.html#discord.Member.timeout)
